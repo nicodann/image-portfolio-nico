@@ -13,6 +13,7 @@ A self-hosted image portfolio built with Next.js, deployed on Netlify. Upload an
 ### TLDR
 
 - Clone this repo or Fork if you want to pull future updates.
+- Push to new github repo and create personal access token with `repo` write access.
 - add local .env variables (github, cloudinary).
 - install [Netlify CLI](https://docs.netlify.com/cli/get-started/)
 
