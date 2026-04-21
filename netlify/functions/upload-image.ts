@@ -76,7 +76,7 @@ function parseMultipart(event: HandlerEvent): Promise<ParsedForm> {
 function uploadToCloudinary(buffer: Buffer): Promise<string> {
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
-      { resource_type: "image", folder: "portfolio" },
+      { resource_type: "image", folder: process.env.CLOUDINARY_FOLDER_NAME },
       (error, result) => {
         if (error || !result)
           return reject(error ?? new Error("No Cloudinary result"));
