@@ -10,12 +10,22 @@ A self-hosted image portfolio built with Next.js, deployed on Netlify. Upload an
 
 ## Setup
 
-###TLDR: Fork or clone this repo, npm install, add local .env variables (github, cloudinary). Deploy to Netlify, setup netlify auth. install netlify cli >> run "netlify dev". Site is served at localhost:8888.
+### TLDR
 
-dev site localhost:8888
-dev admin site localhost:8888/admin
+- Fork or clone this repo,
+- add local .env variables (github, cloudinary).
+- install [Netlify CLI](https://docs.netlify.com/cli/get-started/)
 
-Netlify will build and deploy automatically on each push. Updating data triggers a push/rebuild ----> serverless updates.
+```bash
+npm install
+netlify dev
+```
+
+- Dev Site: localhost:8888.
+- Admin: localhost:8888/admin
+- Deploy to Netlify and setup netlify identity
+
+Netlify will build and deploy automatically on each push. Updating data triggers a push/rebuild -> serverless updates.
 
 ### 1. Download & Install
 
