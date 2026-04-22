@@ -7,6 +7,7 @@ import AdminHeader from "./AdminHeader";
 import Modal from "./Modal";
 import EditArtworkForm from "./EditArtworkForm";
 import UserSettingsForm from "./UserSettingsForm";
+import SetupModal from "./SetupModal";
 
 export default function AdminUI({
   artwork,
@@ -23,6 +24,7 @@ export default function AdminUI({
   const [isDeleting, setIsDeleting] = useState(false);
   const [pendingEdit, setPendingEdit] = useState<Artwork | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [setupOpen, setSetupOpen] = useState(false);
   const [orderDirty, setOrderDirty] = useState(false);
   const [isSavingOrder, setIsSavingOrder] = useState(false);
 
@@ -158,6 +160,9 @@ export default function AdminUI({
         setUser(u);
         setAutoLoggedOut(false);
         ni.close();
+        if (!u.user_metadata?.full_name || !siteInfo.title) {
+          setSetupOpen(true);
+        }
       });
 
       ni.on("logout", () => {
@@ -233,6 +238,18 @@ export default function AdminUI({
         onEdit={setPendingEdit}
         onReorder={handleReorder}
       />
+
+      {setupOpen && (
+        <SetupModal
+          user={user}
+          getToken={getToken}
+          onClose={() => setSetupOpen(false)}
+          onComplete={(updatedUser) => {
+            setUser(updatedUser);
+            setSetupOpen(false);
+          }}
+        />
+      )}
 
       {settingsOpen && (
         <Modal onClose={() => setSettingsOpen(false)}>
