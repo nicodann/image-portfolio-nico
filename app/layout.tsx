@@ -1,13 +1,20 @@
-import type { Metadata } from 'next'
-import Script from 'next/script'
-import './globals.css'
+import type { Metadata } from "next";
+import Script from "next/script";
+import "./globals.css";
+import { readJsonData } from "@/lib/fetchJsonData";
+
+const { siteInfo } = readJsonData();
 
 export const metadata: Metadata = {
-  title: 'Portfolio',
-  description: 'Artist portfolio',
-}
+  title: siteInfo.title,
+  description: "Artist portfolio",
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body className="bg-neutral-950 text-neutral-100 antialiased">
@@ -18,5 +25,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </body>
     </html>
-  )
+  );
 }
