@@ -121,10 +121,18 @@ export default function AdminUI({
       const u = window.netlifyIdentity.currentUser() as NetlifyUser | null;
       if (!u?.token?.expires_at) return;
 
-      const expiresAt = u.token.expires_at * 1000;
+      const expiresAt = u.token.expires_at;
       const fiveMinutes = 5 * 60 * 1000;
-      const msLeft = expiresAt - Date.now();
-      // console.log("[checkToken] expires_at:", u.token.expires_at, "| ms until expiry:", msLeft, "| will refresh:", msLeft <= fiveMinutes);
+      // const fiveMinutes = 60 * 60 * 1000;
+      // const msLeft = expiresAt - Date.now();
+      // console.log(
+      //   "[checkToken] expires_at:",
+      //   u.token.expires_at,
+      //   "| ms until expiry:",
+      //   msLeft,
+      //   "| will refresh:",
+      //   msLeft <= fiveMinutes,
+      // );
 
       if (Date.now() >= expiresAt - fiveMinutes) {
         try {
@@ -145,6 +153,13 @@ export default function AdminUI({
         }
       }
     }
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        console.log("tab became visible, checking token");
+        checkToken();
+      }
+    };
 
     async function init() {
       const ni = window.netlifyIdentity;
@@ -173,6 +188,8 @@ export default function AdminUI({
       await checkToken();
 
       tokenInterval = setInterval(checkToken, 1_000);
+
+      document.addEventListener("visibilitychange", onVisibilityChange);
     }
 
     if (window.netlifyIdentity) {
@@ -187,10 +204,14 @@ export default function AdminUI({
       return () => {
         clearInterval(pollingInterval);
         clearInterval(tokenInterval);
+        document.removeEventListener("visibilitychange", onVisibilityChange);
       };
     }
 
-    return () => clearInterval(tokenInterval);
+    return () => {
+      clearInterval(tokenInterval);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
   }, []);
 
   //// RENDER //////////////////////////
