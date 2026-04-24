@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 
 interface ModalProps {
   onClose: () => void;
@@ -13,6 +13,8 @@ export default function Modal({
   disableClickOutsideClose = false,
   children,
 }: ModalProps) {
+  const mouseDownOnBackdrop = useRef(false);
+
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
       if (!disableClickOutsideClose && e.key === "Escape") onClose();
@@ -33,7 +35,13 @@ export default function Modal({
     <div
       id="setup-modal"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8"
-      onClick={!disableClickOutsideClose ? onClose : undefined}
+      onMouseDown={(e) => {
+        mouseDownOnBackdrop.current = e.target === e.currentTarget;
+      }}
+      onMouseUp={() => {
+        if (!disableClickOutsideClose && mouseDownOnBackdrop.current) onClose();
+        mouseDownOnBackdrop.current = false;
+      }}
     >
       <button
         className="absolute top-4 right-5 text-neutral-400 hover:text-white text-3xl leading-none focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
