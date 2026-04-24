@@ -54,7 +54,7 @@ export default function AdminHeader({
           }}
           className="cursor-pointer hover:underline leading-tight max-w-72"
         >
-          {displayTitle}
+          {displayTitle ?? "Add a title"}
         </h1>
       ) : (
         <UploadSiteInfoForm
