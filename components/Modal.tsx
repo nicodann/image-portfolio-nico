@@ -5,12 +5,17 @@ import { useEffect, useCallback } from "react";
 interface ModalProps {
   onClose: () => void;
   children: React.ReactNode;
+  disableClickOutsideClose?: boolean;
 }
 
-export default function Modal({ onClose, children }: ModalProps) {
+export default function Modal({
+  onClose,
+  disableClickOutsideClose = false,
+  children,
+}: ModalProps) {
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (!disableClickOutsideClose && e.key === "Escape") onClose();
     },
     [onClose],
   );
@@ -26,8 +31,9 @@ export default function Modal({ onClose, children }: ModalProps) {
 
   return (
     <div
+      id="setup-modal"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8"
-      onClick={onClose}
+      onClick={!disableClickOutsideClose ? onClose : undefined}
     >
       <button
         className="absolute top-4 right-5 text-neutral-400 hover:text-white text-3xl leading-none focus:outline-none focus-visible:ring-2 focus-visible:ring-white"

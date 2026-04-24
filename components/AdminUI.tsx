@@ -266,6 +266,7 @@ export default function AdminUI({
           getToken={getToken}
           onClose={() => setSetupOpen(false)}
           onComplete={(updatedUser) => {
+            console.log("On complete called with :", updatedUser);
             setUser(updatedUser);
             setSetupOpen(false);
           }}
