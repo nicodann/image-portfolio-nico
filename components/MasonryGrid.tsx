@@ -35,12 +35,12 @@ function DraggableCard({
   return (
     <div
       ref={ref}
-      className={`relative transition-opacity ${isDragging ? "opacity-30" : "opacity-100"}`}
+      className={`relative group/card transition-opacity ${isDragging ? "opacity-30" : "opacity-100"}`}
     >
       {showHandle && (
         <button
           ref={handleRef}
-          className="absolute top-2 left-2 z-10 cursor-grab text-neutral-400 hover:text-neutral-100 leading-none select-none"
+          className="absolute top-2 left-2 z-10 cursor-grab leading-none select-none text-3xl opacity-0 group-hover/card:opacity-100 transition-opacity text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"
         >
           ⠿
         </button>
@@ -80,12 +80,6 @@ export default function MasonryGrid({
         setActiveId(e.operation.source?.id ?? null);
       }}
       onDragEnd={(e) => {
-        console.log("dragEnd", {
-          canceled: e.canceled,
-          source: e.operation.source?.id,
-          target: e.operation.target?.id,
-        });
-
         setActiveId(null);
         if (e.canceled) return;
 
@@ -131,6 +125,7 @@ export default function MasonryGrid({
                   className="w-full h-auto object-cover transition-opacity duration-300 group-hover:opacity-80"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   priority={index < 4}
+                  draggable={false}
                 />
               </div>
               <div className="pt-2 pb-1">
