@@ -80,6 +80,12 @@ export default function MasonryGrid({
         setActiveId(e.operation.source?.id ?? null);
       }}
       onDragEnd={(e) => {
+        console.log("dragEnd", {
+          canceled: e.canceled,
+          source: e.operation.source?.id,
+          target: e.operation.target?.id,
+        });
+
         setActiveId(null);
         if (e.canceled) return;
 

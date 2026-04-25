@@ -137,28 +137,34 @@ export default function AdminUI({
       // );
 
       const msLeft = expiresAt - Date.now();
-      console.log("[checkToken] msLeft:", msLeft, "| will refresh:", msLeft <= fiveMinutes);
+      // console.log("[checkToken] msLeft:", msLeft, "| will refresh:", msLeft <= fiveMinutes);
 
       if (Date.now() >= expiresAt - fiveMinutes) {
         if (isRefreshing) return;
         isRefreshing = true;
-        console.log("[checkToken] attempting refresh");
+        // console.log("[checkToken] attempting refresh");
         try {
           await window.netlifyIdentity.refresh(true);
           const refreshed = window.netlifyIdentity.currentUser() as NetlifyUser;
           const newExpiry = refreshed?.token?.expires_at ?? 0;
-          console.log("[checkToken] after refresh, newExpiry:", newExpiry, "| now:", Date.now(), "| expired:", newExpiry <= Date.now());
+          // console.log("[checkToken] after refresh, newExpiry:", newExpiry, "| now:", Date.now(), "| expired:", newExpiry <= Date.now());
           if (newExpiry <= Date.now()) {
             throw new Error("Token still expired after refresh");
           }
           setUser(refreshed);
         } catch (err) {
           if (Date.now() >= expiresAt) {
-            console.error("[checkToken] refresh failed and token expired, logging out:", err);
+            console.error(
+              "[checkToken] refresh failed and token expired, logging out:",
+              err,
+            );
             setAutoLoggedOut(true);
             window.netlifyIdentity.logout();
           } else {
-            console.warn("[checkToken] refresh failed but token still valid, will retry:", err);
+            console.warn(
+              "[checkToken] refresh failed but token still valid, will retry:",
+              err,
+            );
           }
         } finally {
           isRefreshing = false;
@@ -168,7 +174,7 @@ export default function AdminUI({
 
     const onVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        console.log("tab became visible, checking token");
+        // console.log("tab became visible, checking token");
         checkToken();
       }
     };
@@ -193,7 +199,7 @@ export default function AdminUI({
       });
 
       ni.on("logout", () => {
-        console.log("[netlifyIdentity] logout event");
+        // console.log("[netlifyIdentity] logout event");
         setUser(null);
       });
 
