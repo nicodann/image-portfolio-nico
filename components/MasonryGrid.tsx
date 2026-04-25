@@ -8,9 +8,27 @@ import { Artwork } from "@/types/types";
 import {
   DragDropProvider,
   DragOverlay,
+  PointerSensor,
   useDraggable,
   useDroppable,
 } from "@dnd-kit/react";
+import { PointerActivationConstraints } from "@dnd-kit/dom";
+
+const sensors = [
+  PointerSensor.configure({
+    activationConstraints(event: PointerEvent) {
+      if (event.pointerType === "touch") {
+        return [
+          new PointerActivationConstraints.Delay({
+            value: 250,
+            tolerance: 5,
+          }),
+        ];
+      }
+      return [new PointerActivationConstraints.Distance({ value: 5 })];
+    },
+  }),
+];
 
 const breakpointCols = {
   default: 4,
@@ -29,7 +47,7 @@ function DraggableCard({
   id: number | string;
   showHandle?: boolean;
 }) {
-  const { ref, handleRef, isDragging } = useDraggable({ id });
+  const { ref, isDragging } = useDraggable({ id });
   const { ref: dropRef } = useDroppable({ id });
 
   return (
@@ -38,10 +56,7 @@ function DraggableCard({
       className={`relative group/card transition-opacity ${isDragging ? "opacity-30" : "opacity-100"}`}
     >
       {showHandle && (
-        <button
-          ref={handleRef}
-          className="absolute top-2 left-2 z-10 cursor-grab leading-none select-none text-3xl opacity-0 group-hover/card:opacity-100 transition-opacity text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"
-        >
+        <button className="absolute top-2 left-2 z-10 cursor-grab leading-none select-none text-3xl opacity-0 group-hover/card:opacity-100 transition-opacity text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
           ⠿
         </button>
       )}
@@ -76,6 +91,7 @@ export default function MasonryGrid({
 
   return (
     <DragDropProvider
+      sensors={sensors}
       onDragStart={(e) => {
         setActiveId(e.operation.source?.id ?? null);
       }}
