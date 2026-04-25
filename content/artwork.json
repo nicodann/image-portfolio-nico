@@ -7,13 +7,6 @@
     "imageUrl": "https://res.cloudinary.com/dlc0ekuez/image/upload/v1775696410/portfolio/gh942srrbd8vda5f6g3r.jpg"
   },
   {
-    "id": "1775840469328",
-    "title": "Big Alien guy",
-    "year": 2026,
-    "description": "A big boy.",
-    "imageUrl": "https://res.cloudinary.com/dlc0ekuez/image/upload/v1775840468/portfolio/vqsu9l81xnskuiyybugt.jpg"
-  },
-  {
     "id": "1775734960054",
     "title": "Hamster",
     "year": 2026,
@@ -42,13 +35,6 @@
     "imageUrl": "https://res.cloudinary.com/dlc0ekuez/image/upload/v1775844261/portfolio/nnj4hgzdh2zhv6rqevw3.jpg"
   },
   {
-    "id": "1776480392927",
-    "title": "Bug",
-    "year": 2026,
-    "description": "Desc;alkjf;lasdf",
-    "imageUrl": "https://res.cloudinary.com/dlc0ekuez/image/upload/v1776480392/portfolio/mnx2a5velfxgs6m2yrgm.jpg"
-  },
-  {
     "id": "1775684781088",
     "title": "Armadillo",
     "year": 2026,
@@ -64,17 +50,10 @@
   },
   {
     "id": "1775735055981",
-    "title": "More",
+    "title": "Ratigan",
     "year": 2026,
-    "description": "More",
+    "description": "The purest evil",
     "imageUrl": "https://res.cloudinary.com/dlc0ekuez/image/upload/v1775735055/portfolio/bylofzsrohaks7wc6kcz.jpg"
-  },
-  {
-    "id": "1775735109744",
-    "title": "Even more",
-    "year": 2026,
-    "description": "More art",
-    "imageUrl": "https://res.cloudinary.com/dlc0ekuez/image/upload/v1775735109/portfolio/o3s9ju8jyd4kgzq30hjt.jpg"
   },
   {
     "id": "1775735154131",
